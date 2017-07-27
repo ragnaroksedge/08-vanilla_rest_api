@@ -60,7 +60,7 @@ router.delete('/api/houses', function(req, res) {
     storage.deleteItem('house', req.url.query.id)
     .then( () => {
       res.writeHead(204, {
-        'Content-type': 'text/plain'
+        'Content-Type': 'text/plain'
       });
 
       res.end();
@@ -68,7 +68,7 @@ router.delete('/api/houses', function(req, res) {
     .catch( err => {
       console.error(err);
       res.writeHead(404, {
-        'Content-type': 'text/plain'
+        'Content-Type': 'text/plain'
       });
       res.write('house not found');
       res.end();
@@ -76,7 +76,7 @@ router.delete('/api/houses', function(req, res) {
     return;
   }
   res.writeHead(400, {
-    'Content-type': 'text/plain'
+    'Content-Type': 'text/plain'
   });
   res.write('bad request');
   res.end();
