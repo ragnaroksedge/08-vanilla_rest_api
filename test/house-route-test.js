@@ -8,50 +8,53 @@ require('../server.js');
 describe('House Routes', function() {
   var house = null;
 
-  describe('POST: /api/houses', function() {
+  describe('POST: /api/house', function() {
     it('should return status code 400: bad request', function(done) {
-      request.post('localhost:8000/api/houses')
-      .send({})
+      request.post('localhost:8000/api/house')
+      .send({ something: 'something' })
       .end((err, res) => {
-        expect(!res.body);
         expect(res.status).to.equal(400);
+        expect(res.text).to.equal('bad request');
         done();
       });
     });
     it('should return a house', function(done) {
-      request.post('localhost:8000/api/houses')
-      .send({ name: 'Stark', seat: 'Winterfell', region: 'The North', words: 'Winter is Coming' })
+      request.post('localhost:8000/api/house')
+      .send({ name: 'Hodor', seat: 'Hodor', region: 'Hodor', words: 'Hodor' })
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(200);
-        expect(res.body.name).to.equal('Stark');
-        expect(res.body.seat).to.equal('Winterfell');
-        expect(res.body.region).to.equal('The North');
-        expect(res.body.words).to.equal('Winter is Coming');
+        expect(res.body.name).to.equal('Hodor');
+        expect(res.body.seat).to.equal('Hodor');
+        expect(res.body.region).to.equal('Hodor');
+        expect(res.body.words).to.equal('Hodor');
+        console.log('POST request note:', res.body);
         house = res.body;
         done();
       });
     });
   });
 
-  describe('GET: /api/houses', function() {
+  describe('GET: /api/house', function() {
     it('should return status code 400: bad request', function(done) {
-      request.get('localhost:8000/api/houses?id=')
+      request.get('localhost:8000/api/house?id=')
       .end((err, res) => {
         expect(res.status).to.equal(400);
+        expect(res.text).to.equal('bad request');
         done();
       });
     });
 
     it('should return a house', function(done) {
-      request.get(`localhost:8000/api/houses?id=${house.id}`)
+      request.get(`localhost:8000/api/house?id=${house.id}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(200);
-        expect(res.body.name).to.equal('Stark');
-        expect(res.body.seat).to.equal('Winterfell');
-        expect(res.body.region).to.equal('The North');
-        expect(res.body.words).to.equal('Winter is Coming');
+        expect(res.body.name).to.equal('Hodor');
+        expect(res.body.seat).to.equal('Hodor');
+        expect(res.body.region).to.equal('Hodor');
+        expect(res.body.words).to.equal('Hodor');
+        console.log('GET request note:', res.body);
         done();
       });
     });
