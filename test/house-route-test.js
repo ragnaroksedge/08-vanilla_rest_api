@@ -26,6 +26,14 @@ describe('House Routes', function() {
   });
 
   describe('GET: /api/houses', function() {
+    it('should return status code 400', function(done) {
+      request.get('localhost:8000/api/houses?id=')
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+
     it('should return a house', function(done) {
       request.get(`localhost:8000/api/houses?id=${house.id}`)
       .end((err, res) => {
@@ -35,6 +43,16 @@ describe('House Routes', function() {
         expect(res.body.seat).to.equal('Winterfell');
         expect(res.body.region).to.equal('The North');
         expect(res.body.words).to.equal('Winter is Coming');
+        done();
+      });
+    });
+  });
+
+  describe('GET: /api/fakeroute', function() {
+    it('should return status code 404', function(done) {
+      request.get('localhost:8000/api/fakeroute')
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
         done();
       });
     });
