@@ -55,6 +55,33 @@ router.post('/api/houses', function(req, res) {
   }
 });
 
+router.delete('/api/houses', function(req, res) {
+  if(req.url.query.id) {
+    storage.deleteItem('house', req.url.query.id)
+    .then( () => {
+      res.writeHead(204, {
+        'Content-type': 'text/plain'
+      });
+
+      res.end();
+    })
+    .catch( err => {
+      console.error(err);
+      res.writeHead(404, {
+        'Content-type': 'text/plain'
+      });
+      res.write('house not found');
+      res.end();
+    });
+    return;
+  }
+  res.writeHead(400, {
+    'Content-type': 'text/plain'
+  });
+  res.write('bad request');
+  res.end();
+});
+
 const server = http.createServer(router.route());
 
 server.listen(PORT, () => {

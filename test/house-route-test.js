@@ -9,6 +9,15 @@ describe('House Routes', function() {
   var house = null;
 
   describe('POST: /api/houses', function() {
+    it('should return status code 400: bad request', function(done) {
+      request.post('localhost:8000/api/houses')
+      .send({})
+      .end((err, res) => {
+        expect(!res.body);
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
     it('should return a house', function(done) {
       request.post('localhost:8000/api/houses')
       .send({ name: 'Stark', seat: 'Winterfell', region: 'The North', words: 'Winter is Coming' })
@@ -26,7 +35,7 @@ describe('House Routes', function() {
   });
 
   describe('GET: /api/houses', function() {
-    it('should return status code 400', function(done) {
+    it('should return status code 400: bad request', function(done) {
       request.get('localhost:8000/api/houses?id=')
       .end((err, res) => {
         expect(res.status).to.equal(400);
